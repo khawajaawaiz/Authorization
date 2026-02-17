@@ -1,0 +1,146 @@
+<%- include('partials/header', {user: user}) %>
+
+<div class="container mt-5">
+    <!-- Welcome Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-primary text-white shadow-lg">
+                <div class="card-body text-center p-5">
+                    <h1 class="display-4">Welcome, <%= user.username %>! 🎉</h1>
+                    <p class="lead">You're now logged into your dashboard</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Information Card -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">👤 Your Account Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>User ID:</th>
+                            <td><%= user.id %></td>
+                        </tr>
+                        <tr>
+                            <th>Username:</th>
+                            <td><%= user.username %></td>
+                        </tr>
+                        <tr>
+                            <th>Role:</th>
+                            <td>
+                                <% if (user.role === 'admin') { %>
+                                    <span class="badge bg-danger">ADMIN</span>
+                                <% } else if (user.role === 'author') { %>
+                                    <span class="badge bg-primary">AUTHOR</span>
+                                <% } else { %>
+                                    <span class="badge bg-primary">AUTHOR</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td><%= user.email %></td>
+                        </tr>
+                        <tr>
+                            <th>Account Created:</th>
+                            <td><%= new Date(user.created_at).toLocaleDateString() %></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions Card -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">⚡ Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/blog" class="btn btn-outline-primary">
+                            📝 View All Blogs
+                        </a>
+                        
+                        <% if (user.role === 'author' || user.role === 'admin') { %>
+                            <a href="/blog/create" class="btn btn-outline-success">
+                                ✏️ Create New Post
+                            </a>
+                            <a href="/blog/my-posts" class="btn btn-outline-info">
+                                📑 My Posts
+                            </a>
+                        <% } %>
+
+                        <% if (user.role === 'admin') { %>
+                            <a href="/admin/users" class="btn btn-outline-danger">
+                                🛡️ Manage Users
+                            </a>
+                        <% } %>
+
+                        <a href="/" class="btn btn-outline-secondary">
+                            🏠 Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Blog Posts Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">📚 My Blog Posts</h5>
+                </div>
+                <div class="card-body p-4">
+                    <% if (posts.length > 0) { %>
+                        <div class="row">
+                            <% posts.forEach(post => { %>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-truncate"><%= post.title %></h5>
+                                            <p class="card-text text-muted small">
+                                                <%= new Date(post.created_at).toLocaleDateString() %>
+                                                <% if (post.status === 'draft') { %>
+                                                    <span class="badge bg-secondary ms-1">Draft</span>
+                                                <% } else { %>
+                                                    <span class="badge bg-success ms-1">Published</span>
+                                                <% } %>
+                                            </p>
+                                            <a href="/blog/post/<%= post.id %>" class="btn btn-sm btn-outline-primary stretched-link">Read Post</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <a href="/blog/my-posts" class="btn btn-primary">Manage All Posts</a>
+                        </div>
+                    <% } else { %>
+                        <div class="alert alert-info text-center">
+                            <h4>📝 Start Writing!</h4>
+                            <p class="mb-0">You haven't created any blog posts yet.</p>
+                            <a href="/blog/create" class="btn btn-success mt-3">Create First Post</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>

@@ -1,0 +1,77 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Navigation -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/blog">All Posts</a></li>
+                    <% if (user && user.id === post.author_id) { %>
+                        <li class="breadcrumb-item"><a href="/blog/my-posts">My Posts</a></li>
+                    <% } %>
+                    <li class="breadcrumb-item active" aria-current="page"><%= post.title %></li>
+                </ol>
+            </nav>
+
+            <!-- Status Banner for Drafts -->
+            <% if (post.status === 'draft') { %>
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <span>⚠️ <strong>Draft Post:</strong> This post is not visible to the public.</span>
+                    <% if (user && (user.id === post.author_id || user.role === 'admin')) { %>
+                        <form action="/blog/<%= post.id %>/publish" method="POST" class="ms-auto">
+                            <button class="btn btn-sm btn-success">Publish Now</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% } %>
+
+            <!-- Post Content -->
+            <article class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <h1 class="display-3 fw-bold mb-4"><%= post.title %></h1>
+                    
+                    <div class="d-flex align-items-center mb-5 text-muted border-bottom pb-4">
+                        <div class="me-3">
+                            <strong>By <%= post.author_name %></strong>
+                        </div>
+                        <div class="border-start ps-3">
+                            📅 <%= new Date(post.created_at).toLocaleDateString() %>
+                        </div>
+                        <% if (post.created_at !== post.updated_at && post.updated_at) { %>
+                            <div class="border-start ps-3 ms-3">
+                                🔄 Updated: <%= new Date(post.updated_at).toLocaleDateString() %>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="card-text fs-5 lh-lg">
+                        <% post.content.split('\n').forEach(paragraph => { %>
+                            <% if (paragraph.trim()) { %>
+                                <p><%= paragraph %></p>
+                            <% } %>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <% if (user && (user.id === post.author_id || user.role === 'admin')) { %>
+                    <div class="card-footer bg-light p-4 d-flex justify-content-end gap-2">
+                        <a href="/blog/<%= post.id %>/edit" class="btn btn-secondary">Edit Post</a>
+                        <form action="/blog/<%= post.id %>/delete" method="POST" onsubmit="return confirm('Permanently delete this post?')">
+                            <button class="btn btn-danger">Delete Post</button>
+                        </form>
+                    </div>
+                <% } %>
+            </article>
+
+            <!-- Comment Section Placeholder -->
+            <div class="mt-5 text-center text-muted">
+                <hr>
+                <p>Comments section coming soon...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

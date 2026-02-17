@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-4"><%= title %></h1>
+            <p class="lead">Read the latest stories from our authors.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <% if (user && (user.role === 'author' || user.role === 'admin')) { %>
+                <a href="/blog/create" class="btn btn-primary btn-lg">
+                    ✏️ Write New Post
+                </a>
+            <% } %>
+        </div>
+    </div>
+
+    <% if (posts.length === 0) { %>
+        <div class="alert alert-info text-center p-5">
+            <h3>No posts found</h3>
+            <p>Check back later for new content!</p>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <% posts.forEach(post => { %>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= post.title %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                By <%= post.author_name %> | <%= new Date(post.created_at).toLocaleDateString() %>
+                            </h6>
+                            <p class="card-text">
+                                <%= post.content.substring(0, 150) %>...
+                            </p>
+                            <a href="/blog/post/<%= post.id %>" class="btn btn-outline-primary">Read More</a>
+                            
+                            <% if (user && user.role === 'admin') { %>
+                                <div class="mt-2 pt-2 border-top">
+                                    <small class="text-danger fw-bold">Admin Controls:</small>
+                                    <a href="/blog/<%= post.id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form action="/blog/<%= post.id %>/delete" method="POST" class="d-inline" onsubmit="return confirm('Admin Delete: Are you sure?')">
+                                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                             <span class="badge bg-success">Published</span>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,76 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>📑 My Posts</h1>
+        <a href="/blog/create" class="btn btn-success">
+            ✨ Create New Post
+        </a>
+    </div>
+
+    <% if (posts.length === 0) { %>
+        <div class="alert alert-secondary text-center p-5">
+            <h3>You haven't written any posts yet.</h3>
+            <p>Start your journey by creating your first blog post!</p>
+            <a href="/blog/create" class="btn btn-primary mt-3">Start Writing</a>
+        </div>
+    <% } else { %>
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% posts.forEach(post => { %>
+                        <tr>
+                            <td>
+                                <strong><%= post.title %></strong>
+                                <br>
+                                <small class="text-muted"><%= post.content.substring(0, 50) %>...</small>
+                            </td>
+                            <td><%= new Date(post.created_at).toLocaleDateString() %></td>
+                            <td>
+                                <% if (post.status === 'published') { %>
+                                    <span class="badge bg-success">Published</span>
+                                <% } else { %>
+                                    <span class="badge bg-warning text-dark">Draft</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="/blog/post/<%= post.id %>" class="btn btn-sm btn-outline-primary" title="View">
+                                        👁️
+                                    </a>
+                                    <a href="/blog/<%= post.id %>/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                        ✏️
+                                    </a>
+                                    
+                                    <% if (post.status === 'draft') { %>
+                                        <form action="/blog/<%= post.id %>/publish" method="POST" class="d-inline">
+                                            <button class="btn btn-sm btn-outline-success" title="Publish Now">
+                                                🚀
+                                            </button>
+                                        </form>
+                                    <% } %>
+
+                                    <form action="/blog/<%= post.id %>/delete" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            🗑️
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer') %>

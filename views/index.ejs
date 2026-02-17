@@ -1,0 +1,101 @@
+<%- include('partials/header', {user: null}) %>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3">Welcome to My Blog App</h1>
+        <p class="lead text-muted mb-4">Share your thoughts with the world through secure and authenticated blogging</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/auth/register" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="/auth/login" class="btn btn-outline-primary btn-lg">Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container my-5">
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 class="display-5 fw-bold">Why Choose Our Platform?</h2>
+            <p class="text-muted">Built with modern security and best practices</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <!-- Feature 1: Secure Authentication -->
+        <div class="col-md-4">
+            <div class="card feature-card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">🔐</div>
+                    <h4 class="card-title">Secure Authentication</h4>
+                    <p class="card-text text-muted">
+                        Your account is protected with industry-standard JWT tokens and bcrypt password hashing.
+                        We take your security seriously.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 2: Role-Based Access Control -->
+        <div class="col-md-4">
+            <div class="card feature-card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">👥</div>
+                    <h4 class="card-title">Role-Based Access Control</h4>
+                    <p class="card-text text-muted">
+                        <span class="badge bg-warning text-dark">Coming Soon</span><br>
+                        Advanced permission system to control who can create, edit, and delete content.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 3: Easy Blog Management -->
+        <div class="col-md-4">
+            <div class="card feature-card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">📝</div>
+                    <h4 class="card-title">Easy Blog Management</h4>
+                    <p class="card-text text-muted">
+                        Create, edit, and publish your blog posts with an intuitive interface.
+                        Share your ideas effortlessly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Technology Stack Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center p-5">
+                    <h3 class="mb-4">Built With Modern Technology</h3>
+                    <div class="d-flex justify-content-center flex-wrap gap-3">
+                        <span class="badge bg-success fs-6">Node.js + Express</span>
+                        <span class="badge bg-primary fs-6">PostgreSQL Database</span>
+                        <span class="badge bg-info fs-6">JWT Authentication</span>
+                        <span class="badge bg-warning text-dark fs-6">EJS Templates</span>
+                        <span class="badge bg-danger fs-6">Bootstrap 5</span>
+                        <span class="badge bg-secondary fs-6">bcrypt Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="card bg-primary text-white shadow-lg">
+                <div class="card-body p-5">
+                    <h2 class="mb-3">Ready to Get Started?</h2>
+                    <p class="lead mb-4">Join our community and start sharing your stories today!</p>
+                    <a href="/auth/register" class="btn btn-light btn-lg">Create Your Account Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

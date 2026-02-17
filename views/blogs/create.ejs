@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">✨ Create New Blog Post</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/blog/create" method="POST">
+                        <!-- Title Field -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-bold">Title</label>
+                            <input type="text" class="form-control form-control-lg" id="title" name="title" 
+                                   placeholder="Enter a catchy title..." required>
+                        </div>
+
+                        <!-- Content Field -->
+                        <div class="mb-3">
+                            <label for="content" class="form-label fw-bold">Content</label>
+                            <textarea class="form-control" id="content" name="content" rows="10" 
+                                      placeholder="Write your story here..." required></textarea>
+                            <div class="form-text">Markdown is supported.</div>
+                        </div>
+
+                        <!-- Status Field -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Publication Status</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusDraft" value="draft" checked>
+                                    <label class="form-check-label" for="statusDraft">
+                                        📝 Draft (Private)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusPublished" value="published">
+                                    <label class="form-check-label" for="statusPublished">
+                                        🚀 Publish Now
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/blog/my-posts" class="btn btn-light me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4">Create Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h3 class="mb-0">✏️ Edit Post</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/blog/<%= post.id %>/edit" method="POST">
+                        <!-- Title Field -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-bold">Title</label>
+                            <input type="text" class="form-control form-control-lg" id="title" name="title" 
+                                   value="<%= post.title %>" required>
+                        </div>
+
+                        <!-- Content Field -->
+                        <div class="mb-3">
+                            <label for="content" class="form-label fw-bold">Content</label>
+                            <textarea class="form-control" id="content" name="content" rows="10" 
+                                      required><%= post.content %></textarea>
+                        </div>
+
+                        <!-- Status Field -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Publication Status</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusDraft" value="draft" 
+                                           <%= post.status === 'draft' ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="statusDraft">
+                                        📝 Draft (Private)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="statusPublished" value="published"
+                                           <%= post.status === 'published' ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="statusPublished">
+                                        🚀 Published
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/blog/my-posts" class="btn btn-light me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-warning px-4">Update Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
